@@ -10,9 +10,10 @@
     <script src="http://localhost:3000/socket.io/socket.io.js"></script>
     <script>
         var socket = io.connect('http://localhost:3000');
-
-        socket.on('new', function(client) {
-	        document.write(client);
+        
+        socket.on('getStream', function(stream) {
+            //alert('This : ' + stream);
+	        document.write('This : ' + stream);
         });
     </script>
 </body>

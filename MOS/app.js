@@ -50,7 +50,7 @@ function handleAndroid () {
 //var spring = require('socket.io-client')('http://localhost:3000');
 
 var i = require('socket.io-client');
-var serverUrl = 'http://localhost:1337'; // change port to 3000 to see difference
+var serverUrl = 'http://localhost:3000'; // change port to 3000 to see difference
 var spring = i.connect(serverUrl);
 //var spring = new i.Socket('localhost', {port: 1337});
 
