@@ -1,177 +1,152 @@
 package fr.upmc.boteam.annex;
 
-import android.media.CamcorderProfile;
-import android.media.MediaRecorder;
-import android.os.Environment;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
+import android.hardware.Camera;
+import android.os.Build;
 import android.os.Bundle;
+import android.app.Activity;
+import android.content.res.Configuration;
 import android.util.Log;
-import android.view.SurfaceHolder;
-import android.view.SurfaceView;
-import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
+import android.widget.FrameLayout.LayoutParams;
+import android.widget.RelativeLayout;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.net.URISyntaxException;
 
-import io.socket.client.IO;
-import io.socket.client.Socket;
+public class MainActivity extends Activity {
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener,
-        SurfaceHolder.Callback , MediaRecorder.OnInfoListener {
+    public static final String LOG_TAG = "MainActivity";
 
-    final String LOG_TAG = "MainActivity";
-
-    private int recordsCounter;
-    private SurfaceView cameraView;
-    private MediaRecorder recorder;
-    private SurfaceHolder holder;
-    private boolean recording;
-    {
-        recordsCounter = 0;
-        recording = false;
-    }
-
-    private Socket mSocket;
-    {
-        try {
-            mSocket = IO.socket("http://192.168.42.91:3000/");
-        } catch (URISyntaxException e) {
-            throw new RuntimeException(e);
-        }
-    }
+    private Camera camera;
+    private int cameraID;
+    private CameraPreview camPreview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
         setContentView(R.layout.activity_main);
 
-        recorder = new MediaRecorder();
-        recorder.setOnInfoListener(this);
-        initRecorder("rec" + recordsCounter);
+        /* timestamp */
+        Long tsLong = System.currentTimeMillis() / 1000;
+        String timestamp = tsLong.toString();
+        Log.i(LOG_TAG, "Timestamp : " + timestamp);
 
-        cameraView = findViewById(R.id.sv_camera);
-        holder = cameraView.getHolder();
-        holder.addCallback(this);
 
-        cameraView.setClickable(true);
-        cameraView.setOnClickListener(this);
+        if (setCameraInstance()) {
+            this.camPreview = new CameraPreview(this);
 
-        Log.i(LOG_TAG, "Try to connect..");
-
-        mSocket.connect();
-        mSocket.emit("setStream", true);
-    }
-
-    public static final String path = "/storage/emulated/0/OBOApp/";
-    FileInputStream fis = null;
-    BufferedInputStream bis = null;
-
-    private void handleActionSendVideo(String param) {
-        if(param != null) {
-            String videoPath = path + param + ".mp4";
-            int n;
-            try {
-                File file = new File(videoPath);
-                byte[] buffer = new byte[(int)file.length()];
-                fis = new FileInputStream(file);
-                bis = new BufferedInputStream(fis);
-                System.out.println("Sending " + videoPath + "(" + buffer.length + " bytes)");
-                while((n = bis.read(buffer,0,buffer.length)) != -1){
-                    mSocket.emit("setStream", buffer);
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    private void initRecorder(String recordName) {
-        final String EXTENSION = ".mp4";
-        final String SEPARATOR = File.separator;
-        final int QUALITY = CamcorderProfile.QUALITY_480P;
-        final int MAX_DURATION = 5000; // 10000 = 10 seconds
-        //final int MAX_FILE_SIZE = 5000000; // Approximately 5 megabytes
-
-        recorder.setAudioSource(MediaRecorder.AudioSource.DEFAULT);
-        recorder.setVideoSource(MediaRecorder.VideoSource.DEFAULT);
-
-        CamcorderProfile cpHigh = CamcorderProfile.get(QUALITY);
-        recorder.setProfile(cpHigh);
-        recorder.setOutputFile(getDirectory() + SEPARATOR + recordName + EXTENSION);
-        recorder.setMaxDuration(MAX_DURATION);
-        //recorder.setMaxFileSize(MAX_FILE_SIZE);
-    }
-
-    @NonNull
-    private String getDirectory() {
-        File folder = new File(Environment.getExternalStorageDirectory() + "/OBOApp");
-
-        if (!folder.exists()) {
-            boolean success = folder.mkdir();
-            Log.i(LOG_TAG, "file created? " + success);
+        } else {
+            this.finish();
         }
 
-        return folder.getPath();
+        RelativeLayout preview = findViewById(R.id.preview_layout);
+        preview.addView(this.camPreview);
+
+        RelativeLayout.LayoutParams previewLayout = (RelativeLayout.LayoutParams) camPreview.getLayoutParams();
+        previewLayout.width = LayoutParams.MATCH_PARENT;
+        previewLayout.height = LayoutParams.MATCH_PARENT;
+        this.camPreview.setLayoutParams(previewLayout);
     }
 
-    private void prepareRecorder() {
-        recorder.setPreviewDisplay(holder.getSurface());
-
-        try {
-            recorder.prepare();
-
-        } catch (IllegalStateException | IOException e) {
-            e.printStackTrace();
-            finish();
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (setCameraInstance()) {
+            camPreview.refreshDrawableState();
+        }
+        else {
+            Log.e(MainActivity.LOG_TAG, "onResume(): can't reconnect the camera");
+            this.finish();
         }
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        mSocket.disconnect();
+        releaseCameraInstance();
     }
 
     @Override
-    public void onInfo(MediaRecorder mediaRecorder, int i, int i1) {}
-
-    @Override
-    public void surfaceCreated(SurfaceHolder surfaceHolder) {
-        prepareRecorder();
+    protected void onDestroy() {
+        super.onDestroy();
+        releaseCameraInstance();
     }
 
-    @Override
-    public void surfaceChanged(SurfaceHolder surfaceHolder, int i, int i1, int i2) {}
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+    }
 
-    @Override
-    public void surfaceDestroyed(SurfaceHolder surfaceHolder) {}
-
-    @Override
-    public void onClick(View view) {
-        if (recording) {
-            Log.i(LOG_TAG, "STOP");
-            recorder.stop();
-            recording = false;
-
-            // Let's initRecorder so we can record again
-            initRecorder("rec" + recordsCounter / 2);
-            prepareRecorder();
-
-        } else {
-            Log.i(LOG_TAG, "START");
-            recording = true;
-            recorder.start();
+    private boolean setCameraInstance() {
+        if (this.camera != null) {
+            Log.i(MainActivity.LOG_TAG, "setCameraInstance(): camera is already set, nothing to do");
+            return true;
         }
+
+        if (Build.VERSION.SDK_INT >= 15) {
+
+            if (this.cameraID < 0) {
+                Camera.CameraInfo camInfo = new Camera.CameraInfo();
+                for (int i = 0; i < Camera.getNumberOfCameras(); i++) {
+                    Camera.getCameraInfo(i, camInfo);
+
+                    if (camInfo.facing == Camera.CameraInfo.CAMERA_FACING_BACK) {
+                        try {
+                            this.camera = Camera.open(i);
+                            this.cameraID = i;
+                            return true;
+
+                        } catch (RuntimeException e) {
+                            Log.e(MainActivity.LOG_TAG, "setCameraInstance(): trying to open camera #" + i + " but it's locked", e);
+                        }
+                    }
+                }
+            } else {
+                try {
+                    this.camera = Camera.open(this.cameraID);
+
+                } catch (RuntimeException e){
+                    Log.e(MainActivity.LOG_TAG, "setCameraInstance(): trying to re-open camera #" + this.cameraID + " but it's locked", e);
+                }
+            }
+        }
+
+        if (this.camera == null) {
+            try {
+                this.camera = Camera.open();
+                this.cameraID = 0;
+
+            } catch (RuntimeException e) {
+                Log.e(MainActivity.LOG_TAG,
+                        "setCameraInstance(): trying to open default camera but it's locked. "
+                                + "The camera is not available for this app at the moment.", e
+                );
+                return false;
+            }
+        }
+
+        Log.i(MainActivity.LOG_TAG, "setCameraInstance(): successfully set camera #" + this.cameraID);
+        return true;
+    }
+
+    private void releaseCameraInstance() {
+        if (this.camera != null) {
+            try {
+                this.camera.stopPreview();
+            }
+            catch (Exception e) {
+                Log.i(MainActivity.LOG_TAG, "releaseCameraInstance(): tried to stop a non-existent preview, this is not an error");
+            }
+
+            this.camera.setPreviewCallback(null);
+            this.camera.release();
+            this.camera = null;
+            this.cameraID = -1;
+            Log.i(MainActivity.LOG_TAG, "releaseCameraInstance(): camera has been released.");
+        }
+    }
+
+    public Camera getCamera() {
+        return this.camera;
+    }
+
+    public int getCameraID() {
+        return this.cameraID;
     }
 }
