@@ -23,12 +23,6 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        /* timestamp */
-        Long tsLong = System.currentTimeMillis() / 1000;
-        String timestamp = tsLong.toString();
-        Log.i(LOG_TAG, "Timestamp : " + timestamp);
-
-
         if (setCameraInstance()) {
             this.camPreview = new CameraPreview(this);
 
