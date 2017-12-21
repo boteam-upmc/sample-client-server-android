@@ -10,25 +10,71 @@
     <script src="http://localhost:3000/socket.io/socket.io.js"></script>    
     <script src="js/events-sender.js"></script>
     <script>
-        var socket = io.connect('http://localhost:3000');
+        var socket = io.connect('http://localhost:3000');        
         
         console.log('Connected');
         
-        /* Robot distance control example */
-        angVel(socket, 25);
-        time(socket, 90);
-        angle(socket, 11);
-        rcMode(socket, true);
-        mode(socket, true);
-        leds(socket, false);
-        reset(socket);
-        forward(socket);
-        left(socket);
-        stop(socket);
-        right(socket);
-        backward(socket);
-        pan(socket, 86);
-        period(socket, 33);
+        /* Robot distance control scenario : new event each 2 seconds */    
+        const WAIT = 2000;        
+        setTimeout(function () {            
+            for (var i = 0; i <= 20; i++)  angVel(socket, i);                  
+        }, WAIT * 0);
+        
+        setTimeout(function () {            
+            for (var i = 0; i <= 83; i++) time(socket, i);            
+        }, WAIT * 1);
+        
+        setTimeout(function () {            
+            for (var i = 0; i <= 44; i++) angle(socket, i);
+        }, WAIT * 2);
+        
+        setTimeout(function () {            
+            rcMode(socket, true);
+        }, WAIT * 3);
+        
+        setTimeout(function () {            
+            mode(socket, true);
+        }, WAIT * 4);
+        
+        setTimeout(function () {            
+            leds(socket, true);
+        }, WAIT * 5);
+        
+        setTimeout(function () {            
+            reset(socket);
+        }, WAIT * 6);
+        
+        setTimeout(function () {            
+            forward(socket);
+        }, WAIT * 7);
+        
+        setTimeout(function () {            
+            left(socket);        
+        }, WAIT * 8);
+        
+        setTimeout(function () {            
+            stop(socket);
+        }, WAIT * 9);
+        
+        setTimeout(function () {            
+            right(socket); 
+        }, WAIT * 10);
+        
+        setTimeout(function () {            
+            backward(socket);  
+        }, WAIT * 11);
+        
+        setTimeout(function () {            
+            for (var i = 0; i <= 100; i++) pan(socket, i);      
+        }, WAIT * 12);
+        
+        setTimeout(function () {            
+            for (var i = 0; i <= 65; i++) tilt(socket, i);      
+        }, WAIT * 13);
+        
+        setTimeout(function () {            
+            for (var i = 0; i <= 11; i++) period(socket, i);
+        }, WAIT * 14);          
                 
         /* Video streaming */
         socket.on('setStream', function(stream) {

@@ -237,7 +237,7 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
       * Example : convert byte[] to another type
       */
     private void processFrame(byte[] raw) {
-        Log.d(MainActivity.LOG_TAG, "processFrame() : raw[9] is " + raw[9]);
+        /*Log.d(MainActivity.LOG_TAG, "processFrame() : raw[9] is " + raw[9]);
 
         try {
             JSONObject rawObj = new JSONObject();
@@ -247,8 +247,7 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
 
         } catch (JSONException e) {
             e.printStackTrace();
-        }
-
+        }*/
     }
 
     private class SetupCameraAsyncTask extends AsyncTask<Void, Void, Void> {

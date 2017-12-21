@@ -116,6 +116,15 @@ function pan (socket, progress) {
 }
 
 /**
+ * Tilt management
+ * @param progress : range between 0 and 100
+ */
+function tilt (socket, progress) {
+    console.log('[tilt] progress = ' + progress);
+    socket.emit('set_tilt', progress);
+}
+
+/**
  * Status period
  * @param progress : range between 0 and 100
  */

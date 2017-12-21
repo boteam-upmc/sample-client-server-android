@@ -25,6 +25,7 @@ module.exports = function (mySocket) {
     right();
     backward();
     pan();
+    tilt();
     period();
 }
 
@@ -34,7 +35,7 @@ module.exports = function (mySocket) {
 function angVel () {
     socket.on('set_angVel', function (progress) {
         console.log('[angVel] progress = ' + progress);
-        socket.emit('get_angVel', progress);
+        socket.broadcast.emit('get_angVel', progress);
     });
 }
 
@@ -44,7 +45,7 @@ function angVel () {
 function time () {    
     socket.on('set_time', function (progress) {
         console.log('[time] progress = ' + progress);
-        socket.emit('get_time', progress);
+        socket.broadcast.emit('get_time', progress);
     });
 }
 
@@ -54,7 +55,7 @@ function time () {
 function angle () {    
     socket.on('set_angle', function (progress) {
         console.log('[angle] progress = ' + progress);
-        socket.emit('get_angle', progress);
+        socket.broadcast.emit('get_angle', progress);
     });
 }
 
@@ -64,7 +65,7 @@ function angle () {
 function rcMode () {    
     socket.on('set_rcMode', function (isChecked) {
         console.log('[rcMode] isChecked = ' + isChecked);    
-        socket.emit('get_rcMode', isChecked);
+        socket.broadcast.emit('get_rcMode', isChecked);
     });
 }
 
@@ -74,7 +75,7 @@ function rcMode () {
 function mode () {    
     socket.on('set_mode', function (isChecked) {
         console.log('[mode] isChecked = ' + isChecked);    
-        socket.emit('get_mode', isChecked);
+        socket.broadcast.emit('get_mode', isChecked);
     });
 }
 
@@ -84,7 +85,7 @@ function mode () {
 function leds () {        
     socket.on('set_leds', function (isChecked) {
         console.log('[leds] isChecked = ' + isChecked);
-        socket.emit('get_leds', isChecked);
+        socket.broadcast.emit('get_leds', isChecked);
     });
 }
 
@@ -94,7 +95,7 @@ function leds () {
 function reset () {        
     socket.on('set_reset', function () {
         console.log('[reset] ' + null);
-        socket.emit('get_reset', null);
+        socket.broadcast.emit('get_reset', null);
     });
 }
 
@@ -104,7 +105,7 @@ function reset () {
 function forward () {
     socket.on('set_forward', function () {
         console.log('[forward] ' + null);
-        socket.emit('get_forward', null);
+        socket.broadcast.emit('get_forward', null);
     });
 }
 
@@ -114,7 +115,7 @@ function forward () {
 function left () {
     socket.on('set_left', function () {
         console.log('[left] ' + null);
-        socket.emit('get_left', null);
+        socket.broadcast.emit('get_left', null);
     });
 }
 
@@ -124,7 +125,7 @@ function left () {
 function stop () {
     socket.on('set_stop', function () {
         console.log('[stop] ' + null);
-        socket.emit('get_stop', null);
+        socket.broadcast.emit('get_stop', null);
     });
 }
 
@@ -134,7 +135,7 @@ function stop () {
 function right () {
     socket.on('set_right', function () {
         console.log('[right] ' + null);
-        socket.emit('get_right', null);
+        socket.broadcast.emit('get_right', null);
     });
 }
 
@@ -144,7 +145,7 @@ function right () {
 function backward () {
     socket.on('set_backward', function () {
         console.log('[backward] ' + null);
-        socket.emit('get_backward', null);
+        socket.broadcast.emit('get_backward', null);
     });
 }
 
@@ -154,7 +155,17 @@ function backward () {
 function pan () {
     socket.on('set_pan', function (progress) {
         console.log('[pan] progress = ' + progress);
-        socket.emit('get_pan', progress);
+        socket.broadcast.emit('get_pan', progress);
+    });
+}
+
+/**
+ * Tilt management
+ */
+function tilt () {
+    socket.on('set_tilt', function (progress) {
+        console.log('[tilt] progress = ' + progress);
+        socket.broadcast.emit('get_tilt', progress);
     });
 }
 
@@ -164,6 +175,6 @@ function pan () {
 function period () {
     socket.on('set_period', function (progress) {
         console.log('[period] progress = ' + progress);
-        socket.emit('get_period', progress);
+        socket.broadcast.emit('get_period', progress);
     });
 }
