@@ -19,8 +19,3 @@ io.on(constant.EVENT_CONNECT, function (socket) {
 });
 
 app.use(express.static('public'));
-/*app.use('/', express.static(__dirname + '/public'));
-
-app.all('*', function (req, res) {
-  res.sendFile(__dirname + '/index.html');
-});*/
