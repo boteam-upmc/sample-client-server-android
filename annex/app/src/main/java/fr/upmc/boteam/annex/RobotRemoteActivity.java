@@ -6,8 +6,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
+
+import org.json.JSONObject;
 
 import java.net.URISyntaxException;
 
@@ -87,6 +90,7 @@ public class RobotRemoteActivity extends AppCompatActivity {
         tglLeds.setChecked(false);
 
         mSocket.connect();
+        //sendTextualData();
         handleEvents();
     }
 
@@ -100,6 +104,22 @@ public class RobotRemoteActivity extends AppCompatActivity {
             }
         }
     };
+
+    // ***
+    /*public void sendTextualData() {
+        JSONObject textualData = new JSONObject();
+
+        textualData.put("gaps", txtGaps.getText());
+        textualData.put("falls", txtFalls.getText());
+        textualData.put("irs", txtIRs.getText());
+        textualData.put("pan", txtPan.getText());
+        textualData.put("tilt", txtTilt.getText());
+        textualData.put("left", txtLeft.getText());
+        textualData.put("right", txtRight.getText());
+        textualData.put("battery", txtBattery.getText());
+
+        mSocket.emit("set_data", textualData);
+    }*/
 
     // ****
     public void handleEvents() {
@@ -287,9 +307,9 @@ public class RobotRemoteActivity extends AppCompatActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    int progress = (int) args[0];
+                    String progress = (String) args[0];
                     Log.i(LOG_TAG, "[onAngVel] progress = " + progress);
-                    skBarAngVel.setProgress(progress);
+                    skBarAngVel.setProgress(Integer.parseInt(progress));
                 }
             });
         }
@@ -303,9 +323,9 @@ public class RobotRemoteActivity extends AppCompatActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    int progress = (int) args[0];
+                    String progress = (String) args[0];
                     Log.i(LOG_TAG, "[onTime] progress = " + progress);
-                    skBarTime.setProgress(progress);
+                    skBarTime.setProgress(Integer.parseInt(progress));
                 }
             });
         }
@@ -319,9 +339,9 @@ public class RobotRemoteActivity extends AppCompatActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    int progress = (int) args[0];
+                    String progress = (String) args[0];
                     Log.i(LOG_TAG, "[onAngle] progress = " + progress);
-                    skBarAngle.setProgress(progress);
+                    skBarAngle.setProgress(Integer.parseInt(progress));
                 }
             });
         }
@@ -335,9 +355,9 @@ public class RobotRemoteActivity extends AppCompatActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    int progress = (int) args[0];
+                    String progress = (String) args[0];
                     Log.i(LOG_TAG, "[onPan] progress = " + progress);
-                    skBarPan.setProgress(progress);
+                    skBarPan.setProgress(Integer.parseInt(progress));
                 }
             });
         }
@@ -351,9 +371,9 @@ public class RobotRemoteActivity extends AppCompatActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    int progress = (int) args[0];
+                    String progress = (String) args[0];
                     Log.i(LOG_TAG, "[onTilt] progress = " + progress);
-                    skBarTilt.setProgress(progress);
+                    skBarTilt.setProgress(Integer.parseInt(progress));
                 }
             });
         }
@@ -367,9 +387,9 @@ public class RobotRemoteActivity extends AppCompatActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    int progress = (int) args[0];
+                    String progress = (String) args[0];
                     Log.i(LOG_TAG, "[onPeriod] progress = " + progress);
-                    skBarPeriod.setProgress(progress);
+                    skBarPeriod.setProgress(Integer.parseInt(progress));
                 }
             });
         }
