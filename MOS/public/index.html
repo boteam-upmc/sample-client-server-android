@@ -1,105 +1,482 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>TEST </title>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+
+
+<link rel="stylesheet" type="text/css" href="css/testVideo.css" media="screen" />
+
 </head>
+
 <body>
-    <link rel="stylesheet" type="text/css" href="css/style.css" />
-    
-    <script src="http://localhost:3000/socket.io/socket.io.js"></script>    
-    <script src="js/events-sender.js"></script>
-    <script>
-        var socket = io.connect('http://localhost:3000');        
+<div id="main">
+	<div class="container-fluid">
+		<div class="row">
+
+			<section id="options" class="col-md-2" >
+				<table>
+						<!--  Cases to chose the touch who drive the robot  -->
+					<tr>
+						<td>Forward: </td>
+						<td><input class="case" type="text" size="10"/></td>
+					</tr>
+
+					<tr>
+						<td>Right: </td>
+						<td><input class="case" type="text" size="10"/></td>
+					</tr>
+
+					<tr>
+						<td>Left: </td>
+						<td><input class="case" type="text" size="10"/></td>
+					</tr>
+
+					<tr>
+						<td>Backward: </td>
+						<td><input class="case" type="text" size="10"/></td>
+					</tr>
+
+					<tr>
+						<td size="10">Stop: </td>
+						<td><input class="case" type="text" size="10"/></td>
+					</tr>
+
+					<tr>
+						<td>Reset P/T:</td>
+						<td><input class="case" type="text" size="10"/></td>
+					</tr>
+				</table>
+		    </section>
+
+			<section id="live" class="col-md-8">
+				<div class="row video">
+
+						<video src="cr7.mp4" controls>
+							Your browser does not support the video tag. 
+						</video> 
+
+				</div>
+			</section>
+
+			<aside id="data" class="col-md-2">
+				<div id="infos">
+					<table>
+						<tr>
+							<td>Gaps</td>
+							<td>1 0 0 0</td>
+						</tr>
+						<tr>
+							<td>Falls</td>
+							<td>0 0 0 0</td>
+						</tr>
+						<tr>
+							<td>IRs</td>
+							<td>24 7 6 4 31 56 35 33 8</td>
+						</tr>
+						<tr>
+							<td>Pan</td>
+							<td>6 92 0</td>
+						</tr>
+						<tr>
+							<td>Tilt</td>
+							<td>0 4 71600</td>
+						</tr>
+						<tr>
+							<td>Left</td>
+							<td>55 0 0</td>
+						</tr>
+						<tr>
+							<td>Right</td>
+							<td>40 0 0</td>
+						</tr>
+						<tr>
+							<td>Battery</td>
+							<td>702 (dispatching)</td>
+						</tr>
+						<tr>
+							<td>Last status</td>
+							<td>Thu Jun 02 16:32:05 CEST 2016</td>
+						</tr>
+					</table>
+				</div>	
+			</aside>			
+		</div>
+
+		<div class="row">
+
+			<section id="Configuration" class="col-md-3">
+				<table>
+					<tr>
+						<td>Ang. vel ( <span id="angVelResult" >0</span> )</td>
+						<td><input id="angVel" class="case" min="0"  max="350" value="0" type="range" /></td>
+					</tr>
+
+					<tr>
+						<td>Time ( <span id="timeResult" >0</span> )</td>
+						<td><input id="time" class="case" min="0"  max="10000" value="0" type="range" /></td>
+					</tr>
+
+					<tr>
+						<td>Angle ( <span id="angleResult" >0</span> )</td>
+						<td><input id="angle" class="case" min="0"  max="720" value="0" type="range" /></td>
+					</tr>
+
+					<tr>
+						<td>Pan ( <span id="panResult" >25</span> )</td>
+						<td><input id="pan" class="case" min="0"  max="340" value="25" type="range" /></td>
+					</tr>
+
+					<tr>
+						<td>Tilt ( <span id="tiltResult" >25</span> )</td>
+						<td><input id="tilt" class="case" min="0"  max="110" value="25" type="range" /></td>
+					</tr>
+
+					<tr>
+						<td>Period ( <span id="periodResult" >0</span> )</td>
+						<td><input id="period" class="case" min="0"  max="5000" value="0" type="range" /></td>
+					</tr>
+				</table>
+			</section>
+		
+
+			<section id="fleches" class="col-md-6">
+				<div class="row">
+					<div  class="col-md-2 offset-md-3 align-items-center">
+						<a id="reset" href="#" class="resetButton">RESET P/T </a>
+					</div>
+					<div class="col-md-2 align-items-center">
+						<img id="forward" src="flecheHaut.png"  alt="imageflecheHaut"/>
+					</div>
+				</div>
+				<div class="row justify-content-md-center">
+					<div  class="col-md-2 ooo">
+						<img id="left" class="fleche" src="flecheGauche.png"  alt="imageflecheGauche"/>
+					</div>
+					<div class="col-md-2">  
+						<img id="stop" src="stop.png"  alt="imagestop"/>
+					</div>
+					<div class="col-md-2">
+						<img id="right" src="flecheDroite.png"  alt="imageflecheDroite"/>
+					</div>
+				</div>
+				<div class="row justify-content-md-center">
+					<div class="col-md-2">
+						<img id="backward" src="flecheBas.png"  alt="imageflecheBas"/>
+					</div>
+				</div>
+			</section>
+
+
+
+
+
+			<section id="buttons" class="col-md-3">
+				<div class="row">
+					<div  class="col-md-1">
+						<button id="off" class="btn btn-default" type="submit"> R/C OFF </button>
+					</div>
+				</div>
+				<div class="row">
+					<div  class="col-md-1">
+						<button id="secure" class="btn btn-default" type="submit"> SECURE </button>
+					</div>
+				</div>
+				<div class="row">
+					<div  class="col-md-1">
+						<button id="irLeds" class="btn btn-default" type="submit"> IR LEDs </button>
+					</div>
+				</div>
+			</section>
+
+		</div>
+	</div>
+</div>
+ 
+
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+
+
+<script src="http://localhost:3000/socket.io/socket.io.js"></script>
+<script src="js/events-sender.js"></script>
+
+
+<script type="text/javascript">
+
+var socket = io.connect('http://localhost:3000');    
+console.log('Connected');
+
+// ---------------------------------------------------------------------------------TODO Evenements souris 
         
-        console.log('Connected');
+var left = document.getElementById('left');
+
+left.addEventListener('click', function() {
+    alert('Frappe de la touche Left !');
+    onLeft(socket);
+});
+
+
+var right = document.getElementById('right');
+
+right.addEventListener('click', function() {
+    alert('Frappe de la touche Right !');
+    onRight(socket);
+});
+
+
+var forward = document.getElementById('forward');
+
+forward.addEventListener('click', function() {
+    console.log('Frappe de la touche Forward !');    
+    onForward(socket);    
+});
+
+
+var backward = document.getElementById('backward');
+
+backward.addEventListener('click', function() {
+    console.log('Frappe de la touche backward !');
+    onBackward(socket);
+});
+
+
+var reset = document.getElementById('reset');
+
+reset.addEventListener('click', function() {
+    console.log('Frappe de la touche Reset !');
+    onReset(socket);
+});
+
+var stop = document.getElementById('stop');
+
+stop.addEventListener('click', function() {
+    console.log('Frappe de la touche Stop !');
+    onStop(socket);
+});
+
+
+/*  R/C OFF */
+
+var off = document.getElementById('off');
+var checkRcMode = false;
+off.addEventListener('click', function() {
+
+  if(checkRcMode == false){
+        console.log('true');
+        checkRcMode = true;
+        onRcMode(socket, true);
+    }
+    else{
+        console.log('false');
+        checkRcMode = false;
+        onRcMode(socket, false);
+    }
         
-        /* Robot distance control scenario : new event each 2 seconds */    
-        const WAIT = 2000;        
-        setTimeout(function () {            
-            for (var i = 0; i <= 20; i++)  angVel(socket, i);                  
-        }, WAIT * 0);
-        
-        setTimeout(function () {            
-            for (var i = 0; i <= 83; i++) time(socket, i);            
-        }, WAIT * 1);
-        
-        setTimeout(function () {            
-            for (var i = 0; i <= 44; i++) angle(socket, i);
-        }, WAIT * 2);
-        
-        setTimeout(function () {            
-            rcMode(socket, true);
-        }, WAIT * 3);
-        
-        setTimeout(function () {            
-            mode(socket, true);
-        }, WAIT * 4);
-        
-        setTimeout(function () {            
-            leds(socket, true);
-        }, WAIT * 5);
-        
-        setTimeout(function () {            
-            reset(socket);
-        }, WAIT * 6);
-        
-        setTimeout(function () {            
-            forward(socket);
-        }, WAIT * 7);
-        
-        setTimeout(function () {            
-            left(socket);        
-        }, WAIT * 8);
-        
-        setTimeout(function () {            
-            stop(socket);
-        }, WAIT * 9);
-        
-        setTimeout(function () {            
-            right(socket); 
-        }, WAIT * 10);
-        
-        setTimeout(function () {            
-            backward(socket);  
-        }, WAIT * 11);
-        
-        setTimeout(function () {            
-            for (var i = 0; i <= 100; i++) pan(socket, i);      
-        }, WAIT * 12);
-        
-        setTimeout(function () {            
-            for (var i = 0; i <= 65; i++) tilt(socket, i);      
-        }, WAIT * 13);
-        
-        setTimeout(function () {            
-            for (var i = 0; i <= 11; i++) period(socket, i);
-        }, WAIT * 14);          
-                
-        /* Video streaming */
-        socket.on('setStream', function(stream) {
-            
-            /* ArrayBuffer */
-            var buffer = stream.raw;  
-                
-            //var int8View = new Int8Array(buffer);  
-            
-            var int8View = new Int8Array(buffer);            
-            console.log(int8View[9]);
-                                                                    
-            /*var video = document.getElementById("video1");
-            video.onload = function(e) {
-                window.URL.revokeObjectURL(video.src);
-            };
-            
-            var blob = new Blob([int8View], { type: "" });
-       
-            video.src = window.URL.createObjectURL(blob);
-            document.body.appendChild(video);*/
-        });
-    </script>        
-    
-    <h1>Hello from the web</h1>
-    <video id="video1" controls="controls"></video>
+    console.log('Frappe bouton off !');
+});
+
+/*  SECURE */
+
+var secure = document.getElementById('secure');
+var checkSecure = false;
+secure.addEventListener('click', function() {
+	
+    if(checkSecure == false){
+        console.log('true');
+        checkSecure = true;
+        onMode(socket, true);
+    }
+    else{
+        console.log('false');
+        checkSecure = false;
+        onMode(socket, false);
+    }
+    console.log('Frappe bouton secure !');
+});
+
+/*  IRLEDS */
+
+var irLeds = document.getElementById('irLeds');
+var checkLeds = false;
+irLeds.addEventListener('click', function() {
+    if(checkLeds == false){
+        console.log('true');
+        checkLeds = true;
+        onLeds(socket, true);
+    }
+    else{
+        console.log('false');
+        checkLeds = false;
+        onLeds(socket, false);
+    }
+    console.log('Frappe bouton irLeds !');
+});
+
+
+/* OPTIONS  SLIDER*/
+
+/********angVel******/
+
+$('#angVel').on('input', function(){
+    document.getElementById("angVelResult").innerHTML = $('#angVel').val() ;
+});
+
+
+$('#angVel').on('click', function(){
+	console.log("angVel");
+	onAngVel(socket, $('#angVel').val());
+   // $('#angVelResultsss').val($('#angVel').val()); // a enlever qu'a la fin
+});
+
+/******** time ******/
+
+$('#time').on('input', function(){
+    document.getElementById("timeResult").innerHTML = $('#time').val() ;
+});
+
+
+$('#time').on('click', function(){
+	console.log("time");
+	onTime(socket, $('#time').val());
+});
+
+/******** angle ******/
+$('#angle').on('input', function(){
+    document.getElementById("angleResult").innerHTML = $('#angle').val() ;
+});
+
+
+$('#angle').on('click', function(){
+	console.log("angle");
+	onAngle(socket, $('#angle').val());
+});
+
+/******** pan ******/
+$('#pan').on('input', function(){
+    document.getElementById("panResult").innerHTML = $('#pan').val() ;
+});
+
+
+$('#pan').on('click', function(){
+	console.log("pan");
+	onPan(socket, $('#pan').val());
+});
+
+/******** tilt ******/
+$('#tilt').on('input', function(){
+    document.getElementById("tiltResult").innerHTML = $('#tilt').val() ;
+});
+
+
+$('#tilt').on('click', function(){
+	console.log("tilt");
+	onTilt(socket, $('#tilt').val());
+});
+
+/******** period ******/
+$('#period').on('input', function(){
+    document.getElementById("periodResult").innerHTML = $('#period').val() ;
+});
+
+
+$('#period').on('click', function(){
+	console.log("period");
+	onPeriod(socket, $('#period').val());
+});
+
+
+
+
+
+
+
+
+//-------------------------------------------------------------------------TODO Gestion des evenements clavier
+document.onkeypress=function(event){
+	
+	e = event || window.event;
+    var keyCode = (e.which) ? e.which : event.keyCode;
+
+    //alert(keyCode);
+    eventDirectionStream(keyCode);
+
+}
+
+function eventDirectionStream(keyCode){
+	switch(keyCode){
+
+		case 120 : //32 barre espace // 120 touche x
+			var elmt = document.getElementById("stop");
+			elmt.style.backgroundColor = "blue";
+			setTimeout(function() {
+				elmt.style.backgroundColor = "red";
+				onStop(socket);
+				console.log("stop");
+			}, 100);
+		 break; 
+
+		case 107 : // 37 touche fleche left //  107 touche k 
+			var elmt = document.getElementById("left");
+			elmt.style.backgroundColor = "blue";
+			setTimeout(function() {
+				elmt.style.backgroundColor = "red";
+				onLeft(socket);
+				console.log("left");
+			}, 100);
+		 break; 
+
+		case 111 :   //38 touche fleche forward // 111 touche o
+			var elmt = document.getElementById("forward");
+			elmt.style.backgroundColor = "blue";
+			setTimeout(function() {
+				elmt.style.backgroundColor = "red";
+				onForward(socket);
+				console.log("forward");
+			}, 100); 
+
+		break; 
+
+		case 109 :   //39 touche fleche right // 109 touche m
+			var elmt = document.getElementById("right");
+			elmt.style.backgroundColor = "blue";
+			setTimeout(function() {
+				elmt.style.backgroundColor = "red";
+				onRight(socket); 
+				console.log("right");
+			}, 100); 
+		break; 
+
+		case 108 :     //40 touche fleche backward //108 touche l
+			var elmt = document.getElementById("backward");
+			elmt.style.backgroundColor = "blue";
+			setTimeout(function() {
+				elmt.style.backgroundColor = "red";
+				onBackward(socket); 
+				console.log("backward");
+			}, 100); 
+		break;
+
+		case 115 :      //115 touche s
+			var elmt = document.getElementById("reset");
+			elmt.style.backgroundColor = "blue";
+			setTimeout(function() {
+				elmt.style.backgroundColor = "red";
+				onReset(socket);
+				console.log("reset");
+			}, 100); 
+		break;
+		default : console.log("Test"+keyCode);
+	}
+}
+
+</script>
+
 </body>
 </html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+    
+    <script src="http://localhost:3000/socket.io/socket.io.js"></script>    
+    <script src="js/events-sender.js"></script>
+    <script>
+        var socket = io.connect('http://localhost:3000');        
+        
+        console.log('Connected');
+        
+        /* Robot distance control scenario : new event each 2 seconds */    
+        const WAIT = 2000;        
+        setTimeout(function () {            
+            for (var i = 0; i <= 20; i++)  onAngVel(socket, i);                  
+        }, WAIT * 0);
+        
+        setTimeout(function () {            
+            for (var i = 0; i <= 83; i++) onTime(socket, i);            
+        }, WAIT * 1);
+        
+        setTimeout(function () {            
+            for (var i = 0; i <= 44; i++) onAngle(socket, i);
+        }, WAIT * 2);
+        
+        setTimeout(function () {            
+            onRcMode(socket, true);
+        }, WAIT * 3);
+        
+        setTimeout(function () {            
+            onMode(socket, true);
+        }, WAIT * 4);
+        
+        setTimeout(function () {            
+            onLeds(socket, true);
+        }, WAIT * 5);
+        
+        setTimeout(function () {            
+            onReset(socket);
+        }, WAIT * 6);
+        
+        setTimeout(function () {            
+            onForward(socket);
+        }, WAIT * 7);
+        
+        setTimeout(function () {            
+            onLeft(socket);        
+        }, WAIT * 8);
+        
+        setTimeout(function () {            
+            onStop(socket);
+        }, WAIT * 9);
+        
+        setTimeout(function () {            
+            onRight(socket); 
+        }, WAIT * 10);
+        
+        setTimeout(function () {            
+            onBackward(socket);  
+        }, WAIT * 11);
+        
+        setTimeout(function () {            
+            for (var i = 0; i <= 100; i++) onPan(socket, i);      
+        }, WAIT * 12);
+        
+        setTimeout(function () {            
+            for (var i = 0; i <= 65; i++) onTilt(socket, i);      
+        }, WAIT * 13);
+        
+        setTimeout(function () {            
+            for (var i = 0; i <= 11; i++) onPeriod(socket, i);
+        }, WAIT * 14);          
+                
+        /* Video streaming */
+        socket.on('setStream', function(stream) {
+            
+            /* ArrayBuffer */
+            var buffer = stream.raw;  
+                
+            //var int8View = new Int8Array(buffer);  
+            
+            var int8View = new Int8Array(buffer);            
+            console.log(int8View[9]);
+                                                                    
+            /*var video = document.getElementById("video1");
+            video.onload = function(e) {
+                window.URL.revokeObjectURL(video.src);
+            };
+            
+            var blob = new Blob([int8View], { type: "" });
+       
+            video.src = window.URL.createObjectURL(blob);
+            document.body.appendChild(video);*/
+        });
+    </script>        
+    
+    <h1>Hello from the web</h1>
+    <video id="video1" controls="controls"></video>
+</body>
+</html>

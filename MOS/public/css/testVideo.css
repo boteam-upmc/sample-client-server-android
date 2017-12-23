@@ -1,0 +1,89 @@
+body{
+	background-color: silver;
+	font-family: Arial;
+}
+
+body > * { margin: 10px; }
+
+img:hover{
+	background-color: blue;
+	border-radius: 3px;
+}
+
+#Configuration{
+	background-color: orange;
+}
+
+#main{
+	margin-top : 10px;
+
+	background-color: white;
+}
+
+.fleches{
+	background-color: yellow;
+
+}
+#right{
+	margin-left: -38px;
+}
+#left{
+	margin-left: 38px;
+	z-index:1;
+}
+#buttons{
+	background-color: purple;
+}
+img{
+	background-color: red;
+	max-width: 90%;
+	min-width: 90%;
+}
+#irLeds, #secure{
+	margin-top: 10px;
+	width: 100px;
+	height: 40px;
+}
+#irLeds:hover, #secure:hover{
+	background-color: blue; 
+}
+#off{
+	margin-top: 30px;
+	width: 100px;
+	height: 40px;
+}
+#off:hover{
+	background-color: blue; 
+}
+#options{
+	background-color: green;
+}
+
+#data{
+	background-color: red;
+}
+.video{
+
+}
+
+td{
+	max-width: 100%;
+	min-width: 100%;
+}
+
+#infos{
+	margin-right: 70px;
+}
+
+
+td .case{
+	margin-left: 5px;
+}
+
+.case{
+	width: 80px;
+}
+.resetButton{
+	background-color: red;
+}
+

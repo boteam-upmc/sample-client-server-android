@@ -14,7 +14,7 @@ io.on(constant.EVENT_CONNECT, function (socket) {
     
     socket.on('getStream', function (stream) {    
         socket.broadcast.emit('setStream', stream);
-    });
-    
+    });        
+        
     handleRobotControlEvents(socket);
 });

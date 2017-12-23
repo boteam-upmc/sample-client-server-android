@@ -11,7 +11,7 @@ var socket;
  */
 module.exports = function (mySocket) {
     socket = mySocket;
-    
+        
     angVel();
     time();
     angle();
@@ -106,6 +106,7 @@ function forward () {
     socket.on('set_forward', function () {
         console.log('[forward] ' + null);
         socket.broadcast.emit('get_forward', null);
+        socket.emit('get_forward', null);
     });
 }
 
