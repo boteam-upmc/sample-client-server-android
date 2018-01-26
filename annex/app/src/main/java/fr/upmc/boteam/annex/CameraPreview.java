@@ -1,5 +1,6 @@
 package fr.upmc.boteam.annex;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -11,8 +12,12 @@ import android.hardware.Camera;
 import android.hardware.Camera.PictureCallback;
 import android.hardware.Camera.PreviewCallback;
 import android.hardware.Camera.Size;
+import android.media.CamcorderProfile;
+import android.media.MediaRecorder;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.os.Environment;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.Surface;
 import android.view.SurfaceHolder;
@@ -24,6 +29,10 @@ import org.json.JSONObject;
 import io.socket.client.IO;
 import io.socket.client.Socket;
 
+import static android.media.MediaRecorder.MEDIA_RECORDER_INFO_MAX_DURATION_REACHED;
+import static android.media.MediaRecorder.MEDIA_RECORDER_INFO_MAX_FILESIZE_REACHED;
+import static android.media.MediaRecorder.MEDIA_RECORDER_INFO_UNKNOWN;
+
 
 public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback, PictureCallback {
 
@@ -32,6 +41,8 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
 
     private byte[] previewBuffer;
     private SurfaceHolder surfaceHolder;
+
+    private MediaRecorder recorder;
 
     private Socket mSocket;
     {
@@ -55,9 +66,12 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-        //setupCamera();
-        new SetupCameraAsyncTask().execute();
+        setupCamera();
+        //new SetupCameraAsyncTask().execute();
         startCameraPreview(holder);
+
+        recorder = new MediaRecorder();
+        initRecorder("rec");
     }
 
     @Override
@@ -68,6 +82,44 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
         }
 
         updateCameraDisplayOrientation();
+
+        try {
+            recorder.setPreviewDisplay(surfaceHolder.getSurface());
+            recorder.prepare();
+            //recorder.start();
+
+        } catch (IllegalStateException | IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void initRecorder(String recordName) {
+        final String EXTENSION = ".mp4";
+        final String SEPARATOR = File.separator;
+        final int QUALITY = CamcorderProfile.QUALITY_HIGH;
+        final int MAX_DURATION = 5000; // 50000 = 50 seconds
+        //final int MAX_FILE_SIZE = 5000000; // Approximately 5 megabytes
+
+        recorder.setAudioSource(MediaRecorder.AudioSource.DEFAULT);
+        recorder.setVideoSource(MediaRecorder.VideoSource.DEFAULT);
+
+        CamcorderProfile cpHigh = CamcorderProfile.get(QUALITY);
+        recorder.setProfile(cpHigh);
+        recorder.setOutputFile(getDirectory() + SEPARATOR + recordName + EXTENSION);
+        recorder.setMaxDuration(MAX_DURATION);
+        //recorder.setMaxFileSize(MAX_FILE_SIZE);
+    }
+
+    @NonNull
+    private String getDirectory() {
+        File folder = new File(Environment.getExternalStorageDirectory() + "/OBOApp");
+
+        if (!folder.exists()) {
+            boolean success = folder.mkdir();
+            Log.i(MainActivity.LOG_TAG, "file created? " + success);
+        }
+
+        return folder.getPath();
     }
 
     @Override
@@ -254,7 +306,7 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
 
         @Override
         protected Void doInBackground(Void... params) {
-            mSocket.connect();
+            //mSocket.connect();
             setupCamera();
 
             return null;

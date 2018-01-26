@@ -1,69 +1,138 @@
 body{
-	background-color: silver;
+	background-color: dimgray;
 	font-family: Arial;
 }
 
-body > * { margin: 10px; }
 
-img:hover{
-	background-color: blue;
+#Configuration{
+height: 80%;
+
+}
+
+#live{
+
+	height: 400px;
+
+}
+
+
+
+#main{
+	margin-top: 2px;
+	margin-left: 10px;
+	margin-right: 10px;
+	background-color: lightgrey;
+	/*height: 10%;*/
+}
+
+.arrows{
+padding-top: 1px;
+}
+
+#forward:hover{
+	background-color: deepskyblue;
 	border-radius: 3px;
 }
 
-#Configuration{
-	background-color: orange;
+#forward{
+	background-color: darkgray;
+	max-width: 80%;
+	min-width: 80%;
 }
 
-#main{
-	margin-top : 10px;
-
-	background-color: white;
+#backward:hover{
+	background-color: deepskyblue;
+	border-radius: 3px;
 }
 
-.fleches{
-	background-color: yellow;
+#backward{
+	background-color: darkgray;
+	max-width: 80%;
+	min-width: 80%;
+}
 
+#reset:hover{
+	background-color: deepskyblue;
+	border-radius: 3px;
 }
-#right{
-	margin-left: -38px;
+
+#reset{
+	background-color: darkgray;	
+	margin-top: 15px;
+	margin-left: -15px;
 }
-#left{
-	margin-left: 38px;
-	z-index:1;
+
+#stop:hover{
+	background-color: deepskyblue;
+	border-radius: 3px;
 }
-#buttons{
-	background-color: purple;
-}
-img{
-	background-color: red;
+
+#stop{
+	background-color: darkgray;
 	max-width: 90%;
 	min-width: 90%;
 }
+
+#right:hover{
+	background-color: deepskyblue;
+	border-radius: 3px;
+}
+
+#right{
+	margin-left: -38px;
+	background-color: darkgray;
+	max-width: 90%;
+	min-width: 90%;
+}
+
+#left:hover{
+	background-color: deepskyblue;
+	border-radius: 3px;
+}
+
+#left{
+	margin-left: 38px;
+	z-index:1;
+	background-color: darkgray;
+	max-width: 90%;
+	min-width: 90%;
+}
+
+#buttons{
+ height: 80%;
+}
+
 #irLeds, #secure{
 	margin-top: 10px;
 	width: 100px;
 	height: 40px;
+	background-color: darkgray;
 }
-#irLeds:hover, #secure:hover{
-	background-color: blue; 
+
+#off:hover, #irLeds:hover, #secure:hover{
+	background-color: deepskyblue; 
 }
+
 #off{
 	margin-top: 30px;
 	width: 100px;
 	height: 40px;
+	background-color: darkgray;
 }
-#off:hover{
-	background-color: blue; 
+
+.ee{
+
+	height: 60%;
 }
 #options{
-	background-color: green;
+	padding-top: 10px;
+
 }
 
 #data{
-	background-color: red;
-}
-.video{
-
+	padding-left: 35px; // TODO bizz
+	max-height: 70%;
+	min-height: 70%;
 }
 
 td{
@@ -75,15 +144,19 @@ td{
 	margin-right: 70px;
 }
 
-
 td .case{
-	margin-left: 5px;
+	margin-left: 0px;
 }
 
 .case{
 	width: 80px;
 }
+
 .resetButton{
-	background-color: red;
+	background-color: darkgray;
 }
 
+video{
+	height: 82%;
+	margin-left: 5%;
+}

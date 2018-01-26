@@ -1,19 +1,27 @@
 package fr.upmc.boteam.annex;
 
 import android.hardware.Camera;
+import android.media.CamcorderProfile;
+import android.media.MediaRecorder;
 import android.os.Build;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.res.Configuration;
+import android.os.Environment;
+import android.support.annotation.NonNull;
 import android.util.Log;
+import android.view.View;
 import android.widget.FrameLayout.LayoutParams;
 import android.widget.RelativeLayout;
+
+import java.io.File;
 
 
 public class MainActivity extends Activity {
 
     public static final String LOG_TAG = "MainActivity";
 
+    // video visualisation
     private Camera camera;
     private int cameraID;
     private CameraPreview camPreview;
@@ -37,6 +45,13 @@ public class MainActivity extends Activity {
         previewLayout.width = LayoutParams.MATCH_PARENT;
         previewLayout.height = LayoutParams.MATCH_PARENT;
         this.camPreview.setLayoutParams(previewLayout);
+
+        /*this.camPreview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                recorder.start();
+            }
+        });*/
     }
 
     @Override

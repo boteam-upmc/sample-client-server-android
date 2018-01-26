@@ -4,7 +4,7 @@
 <head>
 
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<title>TEST </title>
+<title>LiveStream </title>
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
 
@@ -14,51 +14,69 @@
 </head>
 
 <body>
+
+<nav class="navbar navbar-dark bg-dark">
+    <a class="navbar-brand custom" href="/">
+        <img src="./images/logo.jpeg" width="30" height="30" alt="" class="d-inline-block align-top">
+        Obo-Link
+    </a>
+    <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+            <a class="nav-link" href="/profile">Profile</a>
+        </li>
+    </ul>
+    <div class="justify-content-between">
+        <button onclick="" id="logout" type="button" class="btn btn-outline-light">Logout</button>
+    </div>
+</nav>
+
 <div id="main">
-	<div class="container-fluid">
-		<div class="row">
+	<div class="container-fluid aa">
+
+		<div class="row ee">
 
 			<section id="options" class="col-md-2" >
 				<table>
 						<!--  Cases to chose the touch who drive the robot  -->
 					<tr>
 						<td>Forward: </td>
-						<td><input class="case" type="text" size="10"/></td>
+						<td><input id="forW" type="text" size="5" maxlength="1"/></td>
 					</tr>
 
 					<tr>
 						<td>Right: </td>
-						<td><input class="case" type="text" size="10"/></td>
+						<td><input id="R" type="text" size="5" maxlength="1"/></td>
 					</tr>
 
 					<tr>
 						<td>Left: </td>
-						<td><input class="case" type="text" size="10"/></td>
+						<td><input id="L" type="text" size="5" maxlength="1"/></td>
 					</tr>
 
 					<tr>
 						<td>Backward: </td>
-						<td><input class="case" type="text" size="10"/></td>
+						<td><input id="backW" type="text" size="5" maxlength="1"/></td>
 					</tr>
 
 					<tr>
 						<td size="10">Stop: </td>
-						<td><input class="case" type="text" size="10"/></td>
+						<td><input id="S" type="text" size="5" maxlength="1"/></td>
 					</tr>
 
 					<tr>
 						<td>Reset P/T:</td>
-						<td><input class="case" type="text" size="10"/></td>
+						<td><input id="RES" type="text" size="5" maxlength="1"/></td>
 					</tr>
 				</table>
 		    </section>
 
 			<section id="live" class="col-md-8">
 				<div class="row video">
-
+					<div class="offset-md-0">
 						<video src="cr7.mp4" controls>
 							Your browser does not support the video tag. 
 						</video> 
+					</div>
 
 				</div>
 			</section>
@@ -107,13 +125,15 @@
 			</aside>			
 		</div>
 
-		<div class="row">
+
+
+<div class="row">
 
 			<section id="Configuration" class="col-md-3">
 				<table>
 					<tr>
 						<td>Ang. vel ( <span id="angVelResult" >0</span> )</td>
-						<td><input id="angVel" class="case" min="0"  max="350" value="0" type="range" /></td>
+						<td><input id="angVel" class="case" size="10" min="0"  max="350" value="0" type="range" /></td>
 					</tr>
 
 					<tr>
@@ -127,12 +147,12 @@
 					</tr>
 
 					<tr>
-						<td>Pan ( <span id="panResult" >25</span> )</td>
+						<td>Pan ( <span id="panResult" >0</span> )</td>
 						<td><input id="pan" class="case" min="0"  max="340" value="25" type="range" /></td>
 					</tr>
 
 					<tr>
-						<td>Tilt ( <span id="tiltResult" >25</span> )</td>
+						<td>Tilt ( <span id="tiltResult" >0</span> )</td>
 						<td><input id="tilt" class="case" min="0"  max="110" value="25" type="range" /></td>
 					</tr>
 
@@ -144,29 +164,29 @@
 			</section>
 		
 
-			<section id="fleches" class="col-md-6">
+			<section id="arrows" class="col-md-6">
 				<div class="row">
 					<div  class="col-md-2 offset-md-3 align-items-center">
-						<a id="reset" href="#" class="resetButton">RESET P/T </a>
+						<input id="reset" type="submit" value="RESET P/T" size="5" maxlength="1"/>
 					</div>
 					<div class="col-md-2 align-items-center">
-						<img id="forward" src="flecheHaut.png"  alt="imageflecheHaut"/>
+						<img id="forward" src="./images/flecheHaut.png"  alt="imageflecheHaut"/>
 					</div>
 				</div>
 				<div class="row justify-content-md-center">
 					<div  class="col-md-2 ooo">
-						<img id="left" class="fleche" src="flecheGauche.png"  alt="imageflecheGauche"/>
+						<img id="left" class="fleche" src="./images/flecheGauche.png"  alt="imageflecheGauche"/>
 					</div>
 					<div class="col-md-2">  
-						<img id="stop" src="stop.png"  alt="imagestop"/>
+						<img id="stop" src="./images/stop.png"  alt="imagestop"/>
 					</div>
 					<div class="col-md-2">
-						<img id="right" src="flecheDroite.png"  alt="imageflecheDroite"/>
+						<img id="right" src="./images/flecheDroite.png"  alt="imageflecheDroite"/>
 					</div>
 				</div>
 				<div class="row justify-content-md-center">
 					<div class="col-md-2">
-						<img id="backward" src="flecheBas.png"  alt="imageflecheBas"/>
+						<img id="backward" src="./images/flecheBas.png"  alt="imageflecheBas"/>
 					</div>
 				</div>
 			</section>
@@ -194,6 +214,17 @@
 			</section>
 
 		</div>
+
+
+
+
+
+
+
+
+
+
+		
 	</div>
 </div>
  
@@ -209,8 +240,7 @@
 
 
 <script type="text/javascript">
-
-var socket = io.connect('http://localhost:3000');    
+var socket = io.connect('http://localhost:3000'); 
 console.log('Connected');
 
 // ---------------------------------------------------------------------------------TODO Evenements souris 
@@ -392,6 +422,26 @@ $('#period').on('click', function(){
 });
 
 
+/********* Commandes keyBoard **********/
+
+
+/* FORWARD */
+var forW = document.getElementById("forW").value; 
+/* BACKWARD */
+var backW = document.getElementById("backW").value; 
+/* LEFT */
+var L = document.getElementById("L").value; 
+/* RIGHT */
+var R = document.getElementById("R").value; 
+/* STOP */
+var S = document.getElementById("S").value; 
+/* RESET */
+var RES = document.getElementById("R").value; 
+
+
+
+
+
 
 
 
@@ -414,9 +464,9 @@ function eventDirectionStream(keyCode){
 
 		case 120 : //32 barre espace // 120 touche x
 			var elmt = document.getElementById("stop");
-			elmt.style.backgroundColor = "blue";
+			elmt.style.backgroundColor = "deepskyblue";
 			setTimeout(function() {
-				elmt.style.backgroundColor = "red";
+				elmt.style.backgroundColor = "darkgray";
 				onStop(socket);
 				console.log("stop");
 			}, 100);
@@ -424,9 +474,9 @@ function eventDirectionStream(keyCode){
 
 		case 107 : // 37 touche fleche left //  107 touche k 
 			var elmt = document.getElementById("left");
-			elmt.style.backgroundColor = "blue";
+			elmt.style.backgroundColor = "deepskyblue";
 			setTimeout(function() {
-				elmt.style.backgroundColor = "red";
+				elmt.style.backgroundColor = "darkgray";
 				onLeft(socket);
 				console.log("left");
 			}, 100);
@@ -434,9 +484,9 @@ function eventDirectionStream(keyCode){
 
 		case 111 :   //38 touche fleche forward // 111 touche o
 			var elmt = document.getElementById("forward");
-			elmt.style.backgroundColor = "blue";
+			elmt.style.backgroundColor = "deepskyblue";
 			setTimeout(function() {
-				elmt.style.backgroundColor = "red";
+				elmt.style.backgroundColor = "darkgray";
 				onForward(socket);
 				console.log("forward");
 			}, 100); 
@@ -445,9 +495,9 @@ function eventDirectionStream(keyCode){
 
 		case 109 :   //39 touche fleche right // 109 touche m
 			var elmt = document.getElementById("right");
-			elmt.style.backgroundColor = "blue";
+			elmt.style.backgroundColor = "deepskyblue";
 			setTimeout(function() {
-				elmt.style.backgroundColor = "red";
+				elmt.style.backgroundColor = "darkgray";
 				onRight(socket); 
 				console.log("right");
 			}, 100); 
@@ -455,9 +505,9 @@ function eventDirectionStream(keyCode){
 
 		case 108 :     //40 touche fleche backward //108 touche l
 			var elmt = document.getElementById("backward");
-			elmt.style.backgroundColor = "blue";
+			elmt.style.backgroundColor = "deepskyblue";
 			setTimeout(function() {
-				elmt.style.backgroundColor = "red";
+				elmt.style.backgroundColor = "darkgray";
 				onBackward(socket); 
 				console.log("backward");
 			}, 100); 
@@ -465,9 +515,9 @@ function eventDirectionStream(keyCode){
 
 		case 115 :      //115 touche s
 			var elmt = document.getElementById("reset");
-			elmt.style.backgroundColor = "blue";
+			elmt.style.backgroundColor = "deepskyblue";
 			setTimeout(function() {
-				elmt.style.backgroundColor = "red";
+				elmt.style.backgroundColor = "darkgray";
 				onReset(socket);
 				console.log("reset");
 			}, 100); 
