@@ -1,134 +1,134 @@
 /**
- * @title Robot distance control
+ * @title Robot distance control. Send events from WEB to Node.js server.
  * @author L.Adel
- * @date 21/12/2017
+ * @date 30/01/2018
  */
 
 /**
  * The angular velocity bar has been changed, update the value in the label
  * @param progress : range between 0 and 350
  */
-function onAngVel (socket, progress) {
-    console.log('[angVel] progress = ' + progress);
-    socket.emit('set_angVel', progress);
+function onAngVel (socket, data) {
+    console.log('[angVel] progress = ' + data.PROGRESS);
+    socket.emit('set_angVel', data);
 }
 
 /**
  * The time bar has been changed, set the mode to USE TIME and update the value in the label
  * @param progress : range between 0 and 10000
  */
-function onTime (socket, progress) {
-    console.log('[time] progress = ' + progress);
-    socket.emit('set_time', progress);
+function onTime (socket, data) {
+    console.log('[time] progress = ' + data.PROGRESS);
+    socket.emit('set_time', data);
 }
 
 /**
  * The angle bar has been changed, set the mode to USE ANGLE and update the value in the label
  * @param progress : range between 0 and 720
  */
-function onAngle (socket, progress) {
-    console.log('[angle] progress = ' + progress);
-    socket.emit('set_angle', progress);
+function onAngle (socket, data) {
+    console.log('[angle] progress = ' + data.PROGRESS);
+    socket.emit('set_angle', data);
 }
 
 /**
  * Control mode
  * @param isChecked : true or false
  */
-function onRcMode (socket, isChecked) {
-    console.log('[rcMode] isChecked = ' + isChecked);
-    socket.emit('set_rcMode', isChecked);
+function onRcMode (socket, data) {
+    console.log('[rcMode] isChecked = ' + data.IS_CHECKED);
+    socket.emit('set_rcMode', data);
 }
 
 /**
  * Secure & Unsecure movement mode
  * @param isChecked : true or false
  */
-function onMode (socket, isChecked) {
-    console.log('[mode] isChecked = ' + isChecked);
-    socket.emit('set_mode', isChecked);
+function onMode (socket, data) {
+    console.log('[mode] isChecked = ' + data.IS_CHECKED);
+    socket.emit('set_mode', data);
 }
 
 /**
  * IR led toggle mode
  * @param isChecked : true or false
  */
-function onLeds (socket, isChecked) {
-    console.log('[leds] isChecked = ' + isChecked);
-    socket.emit('set_leds', isChecked);
+function onLeds (socket, data) {
+    console.log('[leds] isChecked = ' + data.IS_CHECKED);
+    socket.emit('set_leds', data);
 }
 
 /**
  * Pan & Tilt reset
  */
-function onReset (socket) {
-    console.log('[reset] ' + null);
-    socket.emit('set_reset', null);
+function onReset (socket, data) {
+    console.log('[reset] ' + JSON.stringify(data));
+    socket.emit('set_reset', data);
 }
 
 /**
  * Move forward
  */
-function onForward (socket) {
-    console.log('[forward] ' + null);
-    socket.emit('set_forward', null);
+function onForward (socket, data) {
+    console.log('[forward] ' + JSON.stringify(data));
+    socket.emit('set_forward', data);
 }
 
 /**
  * Turn left
  */
-function onLeft (socket) {
-    console.log('[left] ' + null);
-    socket.emit('set_left', null);
+function onLeft (socket, data) {
+    console.log('[left] ' + JSON.stringify(data));
+    socket.emit('set_left', data);
 }
 
 /**
  * Stop all movement
  */
-function onStop (socket) {
-    console.log('[stop] ' + null);
-    socket.emit('set_stop', null);
+function onStop (socket, data) {
+    console.log('[stop] ' + JSON.stringify(data));
+    socket.emit('set_stop', data);
 }
 
 /**
  * Turn right
  */
-function onRight (socket) {
-    console.log('[right] ' + null);
-    socket.emit('set_right', null);
+function onRight (socket, data) {
+    console.log('[right] ' + JSON.stringify(data));
+    socket.emit('set_right', data);
 }
 
 /**
  * Move backward
  */
-function onBackward (socket) {
-    console.log('[backward] ' + null);
-    socket.emit('set_backward', null);
+function onBackward (socket, data) {
+    console.log('[backward] ' + JSON.stringify(data));
+    socket.emit('set_backward', data);
 }
 
 /**
  * Pan management
  * @param progress : range between 0 and 340 (default progress value == 25)
  */
-function onPan (socket, progress) {
-    console.log('[pan] progress = ' + progress);
-    socket.emit('set_pan', progress);
+function onPan (socket, data) {
+    console.log('[pan] progress = ' + data.PROGRESS);
+    socket.emit('set_pan', data);
 }
 
 /**
  * Tilt management
  * @param progress : range between 0 and 110 (default progress value == 25)
  */
-function onTilt (socket, progress) {
-    console.log('[tilt] progress = ' + progress);
-    socket.emit('set_tilt', progress);
+function onTilt (socket, data) {
+    console.log('[tilt] progress = ' + data.PROGRESS);
+    socket.emit('set_tilt', data);
 }
 
 /**
  * Status period
  * @param progress : range between 0 and 5000
  */
-function onPeriod (socket, progress) {
-    console.log('[period] progress = ' + progress);
-    socket.emit('set_period', progress);
+function onPeriod (socket, data) {
+    console.log('[period] progress = ' + data.PROGRESS);
+    socket.emit('set_period', data);
 }

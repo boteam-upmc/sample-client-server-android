@@ -33,9 +33,10 @@ module.exports = function (mySocket) {
  * The angular velocity bar has been changed, update the value in the label
  */
 function angVel () {
-    socket.on('set_angVel', function (progress) {
-        console.log('[angVel] progress = ' + progress);
-        socket.broadcast.emit('get_angVel', progress);
+    socket.on('set_angVel', function (data) {
+        console.log('[angVel] progress = ' + data.PROGRESS);
+        socket.broadcast.emit('get_angVel', data);
+        socket.emit('get_angVel', data);
     });
 }
 
@@ -43,9 +44,10 @@ function angVel () {
  * The time bar has been changed, set the mode to USE TIME and update the value in the label
  */
 function time () {    
-    socket.on('set_time', function (progress) {
-        console.log('[time] progress = ' + progress);
-        socket.broadcast.emit('get_time', progress);
+    socket.on('set_time', function (data) {
+        console.log('[time] progress = ' + data.PROGRESS);
+        socket.broadcast.emit('get_time', data);
+        socket.emit('get_time', data);
     });
 }
 
@@ -53,9 +55,10 @@ function time () {
  * the angle bar has been changed, set the mode to USE ANGLE and update the value in the label
  */
 function angle () {    
-    socket.on('set_angle', function (progress) {
-        console.log('[angle] progress = ' + progress);
-        socket.broadcast.emit('get_angle', progress);
+    socket.on('set_angle', function (data) {
+        console.log('[angle] progress = ' + data.PROGRESS);
+        socket.broadcast.emit('get_angle', data);
+        socket.emit('get_angle', data);
     });
 }
 
@@ -63,9 +66,10 @@ function angle () {
  * Contro mode
  */
 function rcMode () {    
-    socket.on('set_rcMode', function (isChecked) {
-        console.log('[rcMode] isChecked = ' + isChecked);    
-        socket.broadcast.emit('get_rcMode', isChecked);
+    socket.on('set_rcMode', function (data) {
+        console.log('[rcMode] isChecked = ' + data.IS_CHECKED);    
+        socket.broadcast.emit('get_rcMode', data);
+        socket.emit('get_rcMode', data);
     });
 }
 
@@ -73,9 +77,10 @@ function rcMode () {
  * Secure & Unsecure movement mode
  */
 function mode () {    
-    socket.on('set_mode', function (isChecked) {
-        console.log('[mode] isChecked = ' + isChecked);    
-        socket.broadcast.emit('get_mode', isChecked);
+    socket.on('set_mode', function (data) {
+        console.log('[mode] isChecked = ' + data.IS_CHECKED);
+        socket.broadcast.emit('get_mode', data);
+        socket.emit('get_mode', data);
     });
 }
 
@@ -83,9 +88,10 @@ function mode () {
  * IR led toggle mode
  */
 function leds () {        
-    socket.on('set_leds', function (isChecked) {
-        console.log('[leds] isChecked = ' + isChecked);
-        socket.broadcast.emit('get_leds', isChecked);
+    socket.on('set_leds', function (data) {
+        console.log('[leds] isChecked = ' + data.IS_CHECKED);
+        socket.broadcast.emit('get_leds', data);
+        socket.emit('get_leds', data);
     });
 }
 
@@ -93,9 +99,10 @@ function leds () {
  * Pan & Tilt reset
  */
 function reset () {        
-    socket.on('set_reset', function () {
-        console.log('[reset] ' + null);
-        socket.broadcast.emit('get_reset', null);
+    socket.on('set_reset', function (data) {
+        console.log('[reset] ' + JSON.stringify(data));
+        socket.broadcast.emit('get_reset', data);
+        socket.emit('get_reset', data);
     });
 }
 
@@ -103,10 +110,10 @@ function reset () {
  * Move forward
  */
 function forward () {
-    socket.on('set_forward', function () {
-        console.log('[forward] ' + null);
-        socket.broadcast.emit('get_forward', null);
-        socket.emit('get_forward', null);
+    socket.on('set_forward', function (data) {
+        console.log('[forward] ' + JSON.stringify(data));
+        socket.broadcast.emit('get_forward', data);
+        socket.emit('get_forward', data);
     });
 }
 
@@ -114,9 +121,10 @@ function forward () {
  * Turn left
  */
 function left () {
-    socket.on('set_left', function () {
-        console.log('[left] ' + null);
-        socket.broadcast.emit('get_left', null);
+    socket.on('set_left', function (data) {
+        console.log('[left] ' + JSON.stringify(data));
+        socket.broadcast.emit('get_left', data);
+        socket.emit('get_left', data);
     });
 }
 
@@ -124,9 +132,10 @@ function left () {
  * Stop all movement
  */
 function stop () {
-    socket.on('set_stop', function () {
-        console.log('[stop] ' + null);
-        socket.broadcast.emit('get_stop', null);
+    socket.on('set_stop', function (data) {
+        console.log('[stop] ' + JSON.stringify(data));
+        socket.broadcast.emit('get_stop', data);
+        socket.emit('get_stop', data);
     });
 }
 
@@ -134,9 +143,10 @@ function stop () {
  * Turn right
  */
 function right () {
-    socket.on('set_right', function () {
-        console.log('[right] ' + null);
-        socket.broadcast.emit('get_right', null);
+    socket.on('set_right', function (data) {
+        console.log('[right] ' + JSON.stringify(data));
+        socket.broadcast.emit('get_right', data);
+        socket.emit('get_right', data);
     });
 }
 
@@ -144,9 +154,10 @@ function right () {
  * Move backward
  */
 function backward () {
-    socket.on('set_backward', function () {
-        console.log('[backward] ' + null);
-        socket.broadcast.emit('get_backward', null);
+    socket.on('set_backward', function (data) {
+        console.log('[backward] ' + JSON.stringify(data));
+        socket.broadcast.emit('get_backward', data);
+        socket.emit('get_backward', data);
     });
 }
 
@@ -154,9 +165,10 @@ function backward () {
  * Pan management
  */
 function pan () {
-    socket.on('set_pan', function (progress) {
-        console.log('[pan] progress = ' + progress);
-        socket.broadcast.emit('get_pan', progress);
+    socket.on('set_pan', function (data) {
+        console.log('[pan] progress = ' + data.PROGRESS);
+        socket.broadcast.emit('get_pan', data);
+        socket.emit('get_pan', data);
     });
 }
 
@@ -164,9 +176,10 @@ function pan () {
  * Tilt management
  */
 function tilt () {
-    socket.on('set_tilt', function (progress) {
-        console.log('[tilt] progress = ' + progress);
-        socket.broadcast.emit('get_tilt', progress);
+    socket.on('set_tilt', function (data) {
+        console.log('[tilt] progress = ' + data.PROGRESS);
+        socket.broadcast.emit('get_tilt', data);
+        socket.emit('get_tilt', data);
     });
 }
 
@@ -174,8 +187,9 @@ function tilt () {
  * Status period
  */
 function period () {
-    socket.on('set_period', function (progress) {
-        console.log('[period] progress = ' + progress);
-        socket.broadcast.emit('get_period', progress);
+    socket.on('set_period', function (data) {
+        console.log('[period] progress = ' + data.PROGRESS);
+        socket.broadcast.emit('get_period', data);
+        socket.emit('get_period', data);
     });
 }

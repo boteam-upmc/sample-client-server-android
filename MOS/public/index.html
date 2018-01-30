@@ -248,16 +248,18 @@ console.log('Connected');
 var left = document.getElementById('left');
 
 left.addEventListener('click', function() {
-    alert('Frappe de la touche Left !');
-    onLeft(socket);
+    console.log('Frappe de la touche Left !');
+    data = { "USER":"teambot", "ROBOT":"123456789"};
+    onLeft(socket, data);
 });
 
 
 var right = document.getElementById('right');
 
 right.addEventListener('click', function() {
-    alert('Frappe de la touche Right !');
-    onRight(socket);
+    console.log('Frappe de la touche Right !');
+    data = { "USER":"teambot", "ROBOT":"123456789"};
+    onRight(socket, data);
 });
 
 
@@ -265,7 +267,8 @@ var forward = document.getElementById('forward');
 
 forward.addEventListener('click', function() {
     console.log('Frappe de la touche Forward !');    
-    onForward(socket);    
+    data = { "USER":"teambot", "ROBOT":"123456789"};
+    onForward(socket, data);    
 });
 
 
@@ -273,7 +276,8 @@ var backward = document.getElementById('backward');
 
 backward.addEventListener('click', function() {
     console.log('Frappe de la touche backward !');
-    onBackward(socket);
+    data = { "USER":"teambot", "ROBOT":"123456789"};
+    onBackward(socket, data);
 });
 
 
@@ -281,14 +285,16 @@ var reset = document.getElementById('reset');
 
 reset.addEventListener('click', function() {
     console.log('Frappe de la touche Reset !');
-    onReset(socket);
+    data = { "USER":"teambot", "ROBOT":"123456789"};
+    onReset(socket, data);
 });
 
 var stop = document.getElementById('stop');
 
 stop.addEventListener('click', function() {
     console.log('Frappe de la touche Stop !');
-    onStop(socket);
+    data = { "USER":"teambot", "ROBOT":"123456789"};
+    onStop(socket, data);
 });
 
 
@@ -296,20 +302,11 @@ stop.addEventListener('click', function() {
 
 var off = document.getElementById('off');
 var checkRcMode = false;
-off.addEventListener('click', function() {
-
-  if(checkRcMode == false){
-        console.log('true');
-        checkRcMode = true;
-        onRcMode(socket, true);
-    }
-    else{
-        console.log('false');
-        checkRcMode = false;
-        onRcMode(socket, false);
-    }
-        
-    console.log('Frappe bouton off !');
+off.addEventListener('click', function() {    
+    checkRcMode = !checkRcMode
+    console.log('Frappe bouton off ! ' + checkRcMode);    
+    data = { "USER":"teambot", "ROBOT":"123456789", "IS_CHECKED" : checkRcMode};
+    onRcMode(socket, data);            
 });
 
 /*  SECURE */
@@ -317,18 +314,10 @@ off.addEventListener('click', function() {
 var secure = document.getElementById('secure');
 var checkSecure = false;
 secure.addEventListener('click', function() {
-	
-    if(checkSecure == false){
-        console.log('true');
-        checkSecure = true;
-        onMode(socket, true);
-    }
-    else{
-        console.log('false');
-        checkSecure = false;
-        onMode(socket, false);
-    }
-    console.log('Frappe bouton secure !');
+    checkSecure = !checkSecure
+	console.log('Frappe bouton secure ! ' + checkSecure);
+    data = { "USER":"teambot", "ROBOT":"123456789", "IS_CHECKED" : checkSecure};
+    onMode(socket, data);    
 });
 
 /*  IRLEDS */
@@ -336,17 +325,10 @@ secure.addEventListener('click', function() {
 var irLeds = document.getElementById('irLeds');
 var checkLeds = false;
 irLeds.addEventListener('click', function() {
-    if(checkLeds == false){
-        console.log('true');
-        checkLeds = true;
-        onLeds(socket, true);
-    }
-    else{
-        console.log('false');
-        checkLeds = false;
-        onLeds(socket, false);
-    }
-    console.log('Frappe bouton irLeds !');
+    checkLeds = !checkLeds
+    console.log('Frappe bouton irLeds ! ' + checkLeds);
+    data = { "USER":"teambot", "ROBOT":"123456789", "IS_CHECKED" : checkLeds};
+    onLeds(socket, data);
 });
 
 
@@ -361,8 +343,8 @@ $('#angVel').on('input', function(){
 
 $('#angVel').on('click', function(){
 	console.log("angVel");
-	onAngVel(socket, $('#angVel').val());
-   // $('#angVelResultsss').val($('#angVel').val()); // a enlever qu'a la fin
+	data = { "USER":"teambot", "ROBOT":"123456789", "PROGRESS" : $('#angVel').val()};
+	onAngVel(socket, data);
 });
 
 /******** time ******/
@@ -374,7 +356,8 @@ $('#time').on('input', function(){
 
 $('#time').on('click', function(){
 	console.log("time");
-	onTime(socket, $('#time').val());
+	data = { "USER":"teambot", "ROBOT":"123456789", "PROGRESS" : $('#time').val()};
+	onTime(socket, data);
 });
 
 /******** angle ******/
@@ -385,7 +368,8 @@ $('#angle').on('input', function(){
 
 $('#angle').on('click', function(){
 	console.log("angle");
-	onAngle(socket, $('#angle').val());
+	data = { "USER":"teambot", "ROBOT":"123456789", "PROGRESS" : $('#angle').val()};
+	onAngle(socket, data);
 });
 
 /******** pan ******/
@@ -396,7 +380,8 @@ $('#pan').on('input', function(){
 
 $('#pan').on('click', function(){
 	console.log("pan");
-	onPan(socket, $('#pan').val());
+	data = { "USER":"teambot", "ROBOT":"123456789", "PROGRESS" : $('#pan').val()};
+	onPan(socket, data);
 });
 
 /******** tilt ******/
@@ -407,7 +392,8 @@ $('#tilt').on('input', function(){
 
 $('#tilt').on('click', function(){
 	console.log("tilt");
-	onTilt(socket, $('#tilt').val());
+	data = { "USER":"teambot", "ROBOT":"123456789", "PROGRESS" : $('#tilt').val()};
+	onTilt(socket, data);
 });
 
 /******** period ******/
@@ -418,7 +404,8 @@ $('#period').on('input', function(){
 
 $('#period').on('click', function(){
 	console.log("period");
-	onPeriod(socket, $('#period').val());
+	data = { "USER":"teambot", "ROBOT":"123456789", "PROGRESS" : $('#period').val()};
+	onPeriod(socket, data);
 });
 
 

@@ -10,6 +10,8 @@ import android.widget.SeekBar;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import org.json.JSONObject;
+
 import java.net.URISyntaxException;
 
 import io.socket.client.IO;
@@ -19,6 +21,8 @@ import io.socket.emitter.Emitter;
 public class RobotRemoteActivity extends AppCompatActivity {
 
     private final String LOG_TAG = "RobotRemoteActivity";
+    private final String MY_USER = "teambot";
+    private final String MY_ROBOT = "123456789";
 
     protected Button btnReset;
     protected Button btnForwards;
@@ -160,13 +164,16 @@ public class RobotRemoteActivity extends AppCompatActivity {
     public Emitter.Listener onReset = new Emitter.Listener() {
 
         @Override
-        public void call(Object... args) {
+        public void call(final Object... args) {
 
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    Log.i(LOG_TAG, "[onReset]");
-                    btnReset.performClick();
+                    JSONObject data = (JSONObject) args[0];
+                    Log.i(LOG_TAG, "[onReset] " + data);
+                    if (data.opt("USER").equals(MY_USER) && data.opt("ROBOT").equals(MY_ROBOT)) {
+                        btnReset.performClick();
+                    }
                 }
             });
         }
@@ -175,13 +182,16 @@ public class RobotRemoteActivity extends AppCompatActivity {
     public Emitter.Listener onForwards = new Emitter.Listener() {
 
         @Override
-        public void call(Object... args) {
+        public void call(final Object... args) {
 
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    Log.i(LOG_TAG, "[onForwards]");
-                    btnForwards.performClick();
+                    JSONObject data = (JSONObject) args[0];
+                    Log.i(LOG_TAG, "[onForwards] " + data);
+                    if (data.opt("USER").equals(MY_USER) && data.opt("ROBOT").equals(MY_ROBOT)) {
+                        btnForwards.performClick();
+                    }
                 }
             });
         }
@@ -190,13 +200,16 @@ public class RobotRemoteActivity extends AppCompatActivity {
     public Emitter.Listener onTurnLeft = new Emitter.Listener() {
 
         @Override
-        public void call(Object... args) {
+        public void call(final Object... args) {
 
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    Log.i(LOG_TAG, "[onTurnLeft]");
-                    btnTurnLeft.performClick();
+                    JSONObject data = (JSONObject) args[0];
+                    Log.i(LOG_TAG, "[onTurnLeft] " + data);
+                    if (data.opt("USER").equals(MY_USER) && data.opt("ROBOT").equals(MY_ROBOT)) {
+                        btnTurnLeft.performClick();
+                    }
                 }
             });
         }
@@ -205,13 +218,16 @@ public class RobotRemoteActivity extends AppCompatActivity {
     public Emitter.Listener onStop = new Emitter.Listener() {
 
         @Override
-        public void call(Object... args) {
+        public void call(final Object... args) {
 
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    Log.i(LOG_TAG, "[onStop]");
-                    btnStop.performClick();
+                    JSONObject data = (JSONObject) args[0];
+                    Log.i(LOG_TAG, "[onStop] " + data);
+                    if (data.opt("USER").equals(MY_USER) && data.opt("ROBOT").equals(MY_ROBOT)) {
+                        btnStop.performClick();
+                    }
                 }
             });
         }
@@ -220,13 +236,16 @@ public class RobotRemoteActivity extends AppCompatActivity {
     public Emitter.Listener onTurnRight = new Emitter.Listener() {
 
         @Override
-        public void call(Object... args) {
+        public void call(final Object... args) {
 
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    Log.i(LOG_TAG, "[onTurnRight]");
-                    btnTurnRight.performClick();
+                    JSONObject data = (JSONObject) args[0];
+                    Log.i(LOG_TAG, "[onTurnRight] " + data);
+                    if (data.opt("USER").equals(MY_USER) && data.opt("ROBOT").equals(MY_ROBOT)) {
+                        btnTurnRight.performClick();
+                    }
                 }
             });
         }
@@ -235,13 +254,16 @@ public class RobotRemoteActivity extends AppCompatActivity {
     public Emitter.Listener onBackwards = new Emitter.Listener() {
 
         @Override
-        public void call(Object... args) {
+        public void call(final Object... args) {
 
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    Log.i(LOG_TAG, "[onBackwards]");
-                    btnBackwards.performClick();
+                    JSONObject data = (JSONObject) args[0];
+                    Log.i(LOG_TAG, "[onBackwards] " + data);
+                    if (data.opt("USER").equals(MY_USER) && data.opt("ROBOT").equals(MY_ROBOT)) {
+                        btnBackwards.performClick();
+                    }
                 }
             });
         }
@@ -256,9 +278,11 @@ public class RobotRemoteActivity extends AppCompatActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    boolean isChecked = (boolean) args[0];
-                    Log.i(LOG_TAG, "[onRcMode] isChecked = " + isChecked);
-                    tglRCMode.setChecked(isChecked);
+                    JSONObject data = (JSONObject) args[0];
+                    Log.i(LOG_TAG, "[onRcMode] " + data);
+                    if (data.opt("USER").equals(MY_USER) && data.opt("ROBOT").equals(MY_ROBOT)) {
+                        tglRCMode.setChecked((Boolean) data.opt("IS_CHECKED"));
+                    }
                 }
             });
         }
@@ -272,9 +296,11 @@ public class RobotRemoteActivity extends AppCompatActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    boolean isChecked = (boolean) args[0];
-                    Log.i(LOG_TAG, "[onMode] isChecked = " + isChecked);
-                    tglMode.setChecked(isChecked);
+                    JSONObject data = (JSONObject) args[0];
+                    Log.i(LOG_TAG, "[onMode] " + data);
+                    if (data.opt("USER").equals(MY_USER) && data.opt("ROBOT").equals(MY_ROBOT)) {
+                        tglMode.setChecked((Boolean) data.opt("IS_CHECKED"));
+                    }
                 }
             });
         }
@@ -288,9 +314,11 @@ public class RobotRemoteActivity extends AppCompatActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    boolean isChecked = (boolean) args[0];
-                    Log.i(LOG_TAG, "[onLeds] isChecked = " + isChecked);
-                    tglLeds.setChecked(isChecked);
+                    JSONObject data = (JSONObject) args[0];
+                    Log.i(LOG_TAG, "[onLeds] " + data);
+                    if (data.opt("USER").equals(MY_USER) && data.opt("ROBOT").equals(MY_ROBOT)) {
+                        tglLeds.setChecked((Boolean) data.opt("IS_CHECKED"));
+                    }
                 }
             });
         }
@@ -305,9 +333,12 @@ public class RobotRemoteActivity extends AppCompatActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    String progress = (String) args[0];
-                    Log.i(LOG_TAG, "[onAngVel] progress = " + progress);
-                    skBarAngVel.setProgress(Integer.parseInt(progress));
+                    JSONObject data = (JSONObject) args[0];
+                    Log.i(LOG_TAG, "[onAngVel] " + data);
+                    if (data.opt("USER").equals(MY_USER) && data.opt("ROBOT").equals(MY_ROBOT)) {
+                        String progress = (String) data.opt("PROGRESS");
+                        skBarAngVel.setProgress(Integer.parseInt(progress));
+                    }
                 }
             });
         }
@@ -321,9 +352,12 @@ public class RobotRemoteActivity extends AppCompatActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    String progress = (String) args[0];
-                    Log.i(LOG_TAG, "[onTime] progress = " + progress);
-                    skBarTime.setProgress(Integer.parseInt(progress));
+                    JSONObject data = (JSONObject) args[0];
+                    Log.i(LOG_TAG, "[onTime] " + data);
+                    if (data.opt("USER").equals(MY_USER) && data.opt("ROBOT").equals(MY_ROBOT)) {
+                        String progress = (String) data.opt("PROGRESS");
+                        skBarTime.setProgress(Integer.parseInt(progress));
+                    }
                 }
             });
         }
@@ -337,9 +371,12 @@ public class RobotRemoteActivity extends AppCompatActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    String progress = (String) args[0];
-                    Log.i(LOG_TAG, "[onAngle] progress = " + progress);
-                    skBarAngle.setProgress(Integer.parseInt(progress));
+                    JSONObject data = (JSONObject) args[0];
+                    Log.i(LOG_TAG, "[onAngle] " + data);
+                    if (data.opt("USER").equals(MY_USER) && data.opt("ROBOT").equals(MY_ROBOT)) {
+                        String progress = (String) data.opt("PROGRESS");
+                        skBarAngle.setProgress(Integer.parseInt(progress));
+                    }
                 }
             });
         }
@@ -353,9 +390,12 @@ public class RobotRemoteActivity extends AppCompatActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    String progress = (String) args[0];
-                    Log.i(LOG_TAG, "[onPan] progress = " + progress);
-                    skBarPan.setProgress(Integer.parseInt(progress));
+                    JSONObject data = (JSONObject) args[0];
+                    Log.i(LOG_TAG, "[onPan] " + data);
+                    if (data.opt("USER").equals(MY_USER) && data.opt("ROBOT").equals(MY_ROBOT)) {
+                        String progress = (String) data.opt("PROGRESS");
+                        skBarPan.setProgress(Integer.parseInt(progress));
+                    }
                 }
             });
         }
@@ -369,9 +409,12 @@ public class RobotRemoteActivity extends AppCompatActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    String progress = (String) args[0];
-                    Log.i(LOG_TAG, "[onTilt] progress = " + progress);
-                    skBarTilt.setProgress(Integer.parseInt(progress));
+                    JSONObject data = (JSONObject) args[0];
+                    Log.i(LOG_TAG, "[onTilt] " + data);
+                    if (data.opt("USER").equals(MY_USER) && data.opt("ROBOT").equals(MY_ROBOT)) {
+                        String progress = (String) data.opt("PROGRESS");
+                        skBarTilt.setProgress(Integer.parseInt(progress));
+                    }
                 }
             });
         }
@@ -385,9 +428,12 @@ public class RobotRemoteActivity extends AppCompatActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    String progress = (String) args[0];
-                    Log.i(LOG_TAG, "[onPeriod] progress = " + progress);
-                    skBarPeriod.setProgress(Integer.parseInt(progress));
+                    JSONObject data = (JSONObject) args[0];
+                    Log.i(LOG_TAG, "[onPeriod] " + data);
+                    if (data.opt("USER").equals(MY_USER) && data.opt("ROBOT").equals(MY_ROBOT)) {
+                        String progress = (String) data.opt("PROGRESS");
+                        skBarPeriod.setProgress(Integer.parseInt(progress));
+                    }
                 }
             });
         }
